@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     {{!-- DNS 预抓取 --}}
-    <link rel="dns-prefetch" href="//resource.gamefy.cn">
+    {{!-- <link rel="dns-prefetch" href="//resource.gamefy.cn"> --}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     {{!-- 横屏  --}}
     <meta name="screen-orientation" content="portrait">
     <meta name="x5-orientation" content="portrait">
@@ -16,12 +17,18 @@
     {{#each assets.css}}
     <link rel="stylesheet" href="{{this}}">
     {{/each}}
+    <script type="text/javascript">
+    var initData = '{{{initData}}}'
+    </script>
   </head>
   <body>
     <div class="site-wrapper">
       {{{body}}}
     </div>
     <script src="//cdn.bootcss.com/highlight.js/9.1.0/highlight.min.js"></script>
+    {{#each assets.js}}
+    <script src="{{this}}" charset="utf-8"></script>
+    {{/each}}
     <!-- Highlight -->
     <script type="text/javascript">
       hljs.initHighlightingOnLoad()

@@ -1,0 +1,7 @@
+const server = require('../server')
+const env = require('../config/env')
+const port = env.port
+
+server.listen(port, _ => {
+  console.log('Listening to port ' + port)
+})
