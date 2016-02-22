@@ -1,0 +1,24 @@
+{
+  "name": "try-riot",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^6.5.1",
+    "babel-core": "^6.5.1",
+    "babel-preset-es2015-riot": "^1.0.2",
+    "babel-preset-stage-0": "^6.5.0"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
+    "glob": "^7.0.0",
+    "marked": "^0.3.5",
+    "riot": "^2.3.15"
+  }
+}
