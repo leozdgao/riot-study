@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
-const env = require('../environment')
+const env = require('../env')
 
 const browsers = JSON.stringify({ browsers: [ "IOS >= 7", "Android >= 4" ] })
 const cssLoader = `css?importLoaders=1&sourceMap!autoprefixer?${browsers}`
@@ -30,16 +30,24 @@ module.exports = {
     new AssetsPlugin({
       path: env.publicPath,
       filename: 'assets-client.json'
+    }),
+    new webpack.ProvidePlugin({
+      riot: 'riot'
     })
   ],
   resolve: {
-    extensions: [ '', '.js', '.jsx' ]
+    extensions: [ '', '.js', '.tag' ]
   },
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         loader: 'babel',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.tag$/,
+        loader: 'riotjs',
         exclude: /node_modules/
       },
       {
@@ -49,8 +57,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', cssLoader),
-        exclude: /node_modules/
+        loader: ExtractTextPlugin.extract('style', cssLoader)
       },
       // #TODO:10 为其他类型文件添加loader，比如字体文件，或者图片等 +webpack @prod
       {
@@ -67,10 +74,10 @@ module.exports = {
     // wx: 'wx'
   },
   sassLoader: {
-    includePaths: [
-      path.resolve(__dirname, "../../node_modules/normalize-scss/sass/"),
-      path.resolve(__dirname, "../../node_modules/support-for/sass/"),
-      path.resolve(__dirname, "../../src/__shared/sass/")
-    ]
+    // includePaths: [
+    //   path.resolve(__dirname, "../../node_modules/normalize-scss/sass/"),
+    //   path.resolve(__dirname, "../../node_modules/support-for/sass/"),
+    //   path.resolve(__dirname, "../../src/__shared/sass/")
+    // ]
   }
 }

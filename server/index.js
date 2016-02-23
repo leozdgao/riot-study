@@ -6,6 +6,8 @@ const riot = require('riot')
 const glob = require('glob')
 const exphbs = require('express-handlebars')
 
+riot.settings.brackets = '${ }'
+
 function loadAllComponents (path) {
   glob(path, (err, tags) => {
     tags.forEach(t => require(t))
@@ -23,6 +25,7 @@ app.set('views', path.join(__dirname, './views'))
 
 if (process.env['NODE_ENV'] !== 'production') {
   const webpack = require('webpack')
+  const jsonServer = require('json-server')
   const config = require('../config/webpack/webpack.dev.js')
   const compiler = webpack(config)
 
@@ -30,6 +33,8 @@ if (process.env['NODE_ENV'] !== 'production') {
     noInfo: true,
     publicPath: config.output.publicPath
   }))
+
+  app.use('/api', jsonServer.router(path.join(__dirname, '../api/data.json')))
 }
 
 app.use('/assets', express.static(path.join(__dirname, '../assets')))

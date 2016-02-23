@@ -44,9 +44,8 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css/,
-        loader: cssLoader,
-        exclude: /node_modules/
+        test: /\.css$/,
+        loader: cssLoader
       },
       // #TODO:0 为其他类型文件添加loader，比如字体文件，或者图片等 +webpack @dev
       {
