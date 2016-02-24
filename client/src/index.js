@@ -6,7 +6,9 @@ import 'nprogress/nprogress.css'
 
 const initData = JSON.parse(window.initData)
 
-riot.settings.brackets = '${ }'
-
 NProgress.start()
 window.addEventListener('load', NProgress.done)
+
+riot.route.base('/')
+
+riot.route.start(true)

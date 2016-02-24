@@ -1,11 +1,17 @@
 {
-  "article": [
+  "articles": [
     {
       "id": 1,
       "title": "写一个自己的 Yeoman Generator",
       "tags": [ { "name": "Yeoman" } ],
-      "date": "Feb 14, 2016",
-      "content": ""
+      "date": "Feb 14, 2016"
+    }
+  ],
+  "contents": [
+    {
+      "id": 1,
+      "articleId": 1,
+      "content": "./articles/write-yeoman-generator.md"
     }
   ]
 }

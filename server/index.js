@@ -5,8 +5,8 @@ const marked = require('marked')
 const riot = require('riot')
 const glob = require('glob')
 const exphbs = require('express-handlebars')
-
-riot.settings.brackets = '${ }'
+const _ = require('lodash')
+const routers = require('../isomorphic/routers')
 
 function loadAllComponents (path) {
   glob(path, (err, tags) => {
@@ -34,34 +34,54 @@ if (process.env['NODE_ENV'] !== 'production') {
     publicPath: config.output.publicPath
   }))
 
-  app.use('/api', jsonServer.router(path.join(__dirname, '../api/data.json')))
+  app.use('/api', jsonServer.router(require('../api/data.js')))
 }
 
 app.use('/assets', express.static(path.join(__dirname, '../assets')))
 
-app.use((req, res, next) => {
-  const content = fs.readFileSync(path.join(__dirname, '../data/article.md')).toString()
-  const opts = {
-    data: {
-      // 对应页面的数据
-      title: '写一个自己的 Yeoman Generator',
-      tags: [ { name: 'Yeoman' } ],
-      date: 'Feb 14, 2016',
-      content: marked(content)
-    }
-  }
-
-  const initData = { key: "value" }
-  const body = riot.render('page', opts)
-  res.render('basic', {
-    title: '写一个自己的 Yeoman Generator',
-    assets: {
-      js: [ '/static/bundle.js' ],
-      css: [ ]
-    },
-    initData: JSON.stringify(initData),
-    body
+_.each(routers, (router, mount) => {
+  app.get(mount, function (req, res, next) {
+    router().then(data => {
+      const body = riot.render('page', data)
+      res.render('basic', {
+        title: data.title || 'leozdgao 的个人博客',
+        assets: {
+          js: [ '/static/bundle.js' ],
+          css: [ ]
+        },
+        initData: JSON.stringify(data),
+        body
+      })
+    })
+    .catch(e => {
+      res.status(500).end(e.message)
+    })
   })
 })
+
+// app.use((req, res, next) => {
+//   const content = fs.readFileSync(path.join(__dirname, '../api/articles/write-yeoman-generator.md')).toString()
+//   const opts = {
+//     data: {
+//       // 对应页面的数据
+//       title: '写一个自己的 Yeoman Generator',
+//       tags: [ { name: 'Yeoman' } ],
+//       date: 'Feb 14, 2016',
+//       content: marked(content)
+//     }
+//   }
+//
+//   const initData = { key: "value" }
+//   const body = riot.render('page', opts)
+//   res.render('basic', {
+//     title: '写一个自己的 Yeoman Generator',
+//     assets: {
+//       js: [ '/static/bundle.js' ],
+//       css: [ ]
+//     },
+//     initData: JSON.stringify(initData),
+//     body
+//   })
+// })
 
 module.exports = app
