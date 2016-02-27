@@ -39,6 +39,11 @@ if (process.env['NODE_ENV'] !== 'production') {
 
 app.use('/assets', express.static(path.join(__dirname, '../assets')))
 
+app.use((req, res, next) => {
+  // console.log(req.params)
+  next()
+})
+
 _.each(routers, (router, mount) => {
   app.get(mount, function (req, res, next) {
     router().then(data => {
@@ -54,34 +59,22 @@ _.each(routers, (router, mount) => {
       })
     })
     .catch(e => {
-      res.status(500).end(e.message)
+      if (e instanceof Error) {
+        // Something happened in setting up the request that triggered an Error
+        // console.log('Error', e.message)
+        res.end(e.message)
+      } else {
+        // The request was made, but the server responded with a status code
+        // that falls out of the range of 2xx
+        // console.log(e.data)
+        // console.log(e.status)
+        // //
+        // console.log(e.headers)
+        // console.log(e.config)
+        res.end()
+      }
     })
   })
 })
-
-// app.use((req, res, next) => {
-//   const content = fs.readFileSync(path.join(__dirname, '../api/articles/write-yeoman-generator.md')).toString()
-//   const opts = {
-//     data: {
-//       // 对应页面的数据
-//       title: '写一个自己的 Yeoman Generator',
-//       tags: [ { name: 'Yeoman' } ],
-//       date: 'Feb 14, 2016',
-//       content: marked(content)
-//     }
-//   }
-//
-//   const initData = { key: "value" }
-//   const body = riot.render('page', opts)
-//   res.render('basic', {
-//     title: '写一个自己的 Yeoman Generator',
-//     assets: {
-//       js: [ '/static/bundle.js' ],
-//       css: [ ]
-//     },
-//     initData: JSON.stringify(initData),
-//     body
-//   })
-// })
 
 module.exports = app

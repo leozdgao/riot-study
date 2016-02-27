@@ -1,5 +1,6 @@
 require('es6-promise').polyfill()
-const request = require('superagent')
+// const request = require('superagent')
+const axios = require('axios')
 
 // 获取对应的 view 和 依赖的数据
 
@@ -14,19 +15,10 @@ module.exports = {
 }
 
 function fetchInitData (view, url) {
-  return new Promise((resolve, reject) => {
-    request.get(url).end((err, res) => {
-      if (err) {
-        reject(err)
-        return
+  return axios.get(url)
+    .then(res => {
+      return {
+        view, data: res.data
       }
-      
-      if (res.ok) {
-        resolve({
-          view, data: res.body
-        })
-      }
-      else reject(Error('Fail to get data.'))
     })
-  })
 }
