@@ -9,8 +9,8 @@ module.exports = {
     // get list of articles
     return fetchInitData('post-list', 'http://localhost:4000/api/articles')
   },
-  '/*': function (id) {
-    return fetchInitData('post', `http://localhost:4000/api/contents/${id}?_expand=article`)
+  '/articles/:id': function (params) {
+    return fetchInitData('post', `http://localhost:4000/api/contents/${params.id}?_expand=article`)
   }
 }
 

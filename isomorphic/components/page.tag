@@ -10,6 +10,12 @@
 
   })
 
+  changeView (view, data) {
+    console.log(view)
+    console.log(data)
+    riot.mount(this.content, view, { data })
+  }
+
   riot.mount(this.content, opts.view, { data: opts.data })
   </script>
 </page>

@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 
 _.each(routers, (router, mount) => {
   app.get(mount, function (req, res, next) {
-    router().then(data => {
+    router(req.params).then(data => {
       const body = riot.render('page', data)
       res.render('basic', {
         title: data.title || 'leozdgao 的个人博客',
@@ -59,21 +59,29 @@ _.each(routers, (router, mount) => {
       })
     })
     .catch(e => {
+      const err = Error()
       if (e instanceof Error) {
-        // Something happened in setting up the request that triggered an Error
-        // console.log('Error', e.message)
-        res.end(e.message)
-      } else {
-        // The request was made, but the server responded with a status code
-        // that falls out of the range of 2xx
-        // console.log(e.data)
-        // console.log(e.status)
-        // //
-        // console.log(e.headers)
-        // console.log(e.config)
-        res.end()
+        err.status = 500
+        err.message = e.message
+        next(err)
+      }
+      else {
+        err.status = 404
       }
     })
+  })
+})
+
+app.use((req, res, next) => {
+  const err = Error()
+  err.status = 404
+  next(err)
+})
+
+app.use((err, req, res, next) => {
+  res.render('error', {
+    status: err.status || 500,
+    msg: err.message
   })
 })
 
