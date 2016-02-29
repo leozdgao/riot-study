@@ -5,7 +5,7 @@ import '../../isomorphic/components'
 import '../sass/index.scss'
 import 'nprogress/nprogress.css'
 
-const initData = JSON.parse(window.initData)
+const initData = window.initData
 
 NProgress.start()
 window.addEventListener('load', NProgress.done)
@@ -14,8 +14,10 @@ riot.route.base('/')
 riot.route.parser(null, require('./routeParser'))
 
 let app = null
-Object.keys(routers).forEach(filter => {console.log(filter)
-  riot.route(filter, routeHandler(filter))
+Object.keys(routers).forEach(filter => {
+  (function (filter) {
+    riot.route(filter, routeHandler(filter))
+  })(filter)
 })
 
 function routeHandler (filter) {
@@ -25,7 +27,6 @@ function routeHandler (filter) {
       NProgress.start()
       handler(params).then(({ view, data }) => {
         NProgress.done()
-        // console.log(filter);
         app.changeView(view, data)
       })
     }

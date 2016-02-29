@@ -11,8 +11,6 @@
   })
 
   changeView (view, data) {
-    console.log(view)
-    console.log(data)
     riot.mount(this.content, view, { data })
   }
 
