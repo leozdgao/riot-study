@@ -15,9 +15,7 @@ riot.route.parser(null, require('./routeParser'))
 
 let app = null
 Object.keys(routers).forEach(filter => {
-  (function (filter) {
-    riot.route(filter, routeHandler(filter))
-  })(filter)
+  riot.route(filter, routeHandler(filter))
 })
 
 function routeHandler (filter) {

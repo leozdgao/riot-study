@@ -3,16 +3,11 @@ const path = require('path')
 const fs = require('fs')
 const marked = require('marked')
 const riot = require('riot')
-const glob = require('glob')
 const exphbs = require('express-handlebars')
 const _ = require('lodash')
 const routers = require('../isomorphic/routers')
+const loadAllComponents = require('../isomorphic/helper').loadAllComponents
 
-function loadAllComponents (path) {
-  glob(path, (err, tags) => {
-    tags.forEach(t => require(t))
-  })
-}
 loadAllComponents(path.join(__dirname, '../isomorphic/components/**/*.tag'))
 
 const app = express()
@@ -57,8 +52,7 @@ _.each(routers, (router, mount) => {
         initData: JSON.stringify(data),
         body
       })
-    })
-    .catch(e => {
+    }).catch(e => {
       const err = Error()
       if (e instanceof Error) {
         err.status = 500
