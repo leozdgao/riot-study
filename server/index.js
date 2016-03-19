@@ -1,4 +1,5 @@
 const express = require('express')
+const alwaysRenderIndex = require('connect-history-api-fallback')
 const path = require('path')
 const fs = require('fs')
 const marked = require('marked')
@@ -43,15 +44,19 @@ _.each(routers, (router, mount) => {
   app.get(mount, function (req, res, next) {
     router(req.params).then(data => {
       const body = riot.render('page', data)
-      res.render('basic', {
+      _.assign(app.locals, {
         title: data.title || 'leozdgao 的个人博客',
-        assets: {
-          js: [ '/static/bundle.js' ],
-          css: [ ]
-        },
         initData: JSON.stringify(data),
-        body
+        body,
+        assets: {
+          css: [ ],
+          js: [ '/bundle.js' ]
+        }
       })
+
+      res.render('basic')
+      // next()
+      // res.render('basic', )
     }).catch(e => {
       const err = Error()
       if (e instanceof Error) {
@@ -65,6 +70,8 @@ _.each(routers, (router, mount) => {
     })
   })
 })
+
+// app.use(alwaysRenderIndex())
 
 app.use((req, res, next) => {
   const err = Error()

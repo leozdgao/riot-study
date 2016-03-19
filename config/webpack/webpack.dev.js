@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const env = require('../env')
 
@@ -12,7 +13,7 @@ module.exports = {
   output: {
     path: env.publicPath,
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -22,12 +23,19 @@ module.exports = {
     new webpack.ProvidePlugin({
       riot: 'riot'
     })
+    // new HtmlWebpackPlugin({
+    //   template: './server/views/index.html'
+    // })
   ],
   resolve: {
     extensions: [ '', '.js', '.tag' ]
   },
   module: {
     loaders: [
+      {
+        test: /\.hbs$/,
+        loader: "handlebars"
+      },
       {
         test: /\.js$/,
         loader: 'babel',

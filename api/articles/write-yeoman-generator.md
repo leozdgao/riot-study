@@ -1,3 +1,11 @@
+id: 1
+title: "写一个自己的 Yeoman Generator"
+tags:
+  - "Yeoman"
+date: "Feb 14, 2016"
+
+---
+
 由于自己经常会写一些 demo，或者学习新工具库的使用，然后又比较依赖 npm 的模块管理（这个是重点）和 webpack 的代码打包功能，所以每次都要创建一个目录结构，复制各种 `.rc` 文件，复制 webpack 的配置文件，复制一个应用了 webpack dev 中间件的 express server，每次都要这样，让我心里很烦。
 
 我一直知道 yeoman 这个东西，不过找不到自己喜欢的 generator，简单浏览过 generator 的文档，感觉很麻烦，不易上手，就一直没学。最近在新的项目组，我又定义了一套开发的目录规范，为了给自己和团队的其他人提供开发上的便利，于是决定好好学写 Yeoman Generator。
