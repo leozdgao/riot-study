@@ -5,7 +5,7 @@
       <h1 class="post-title">{opts.data.article.title}</h1>
       <section class="tags">
         <i class="fa fa-tag"></i>
-        <span each={opts.data.article.tags} class="tag">{this.name}</span>
+        <span each={tag in opts.data.article.tags} class="tag">{tag}</span>
       </section>
     </header>
     <section name="wrapper" class="post-content">

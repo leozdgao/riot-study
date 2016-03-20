@@ -1,7 +1,5 @@
-id: 1
 title: "写一个自己的 Yeoman Generator"
-tags:
-  - "Yeoman"
+tags: [ "Yeoman" ]
 date: "Feb 14, 2016"
 
 ---

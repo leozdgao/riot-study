@@ -30,7 +30,7 @@ if (process.env['NODE_ENV'] !== 'production') {
     publicPath: config.output.publicPath
   }))
 
-  app.use('/api', jsonServer.router(require('../api/data.js')))
+  app.use('/api', jsonServer.router(require('../articles/data.json')))
 }
 
 app.use('/assets', express.static(path.join(__dirname, '../assets')))
@@ -70,8 +70,6 @@ _.each(routers, (router, mount) => {
     })
   })
 })
-
-// app.use(alwaysRenderIndex())
 
 app.use((req, res, next) => {
   const err = Error()

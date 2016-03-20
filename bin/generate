@@ -1,0 +1,48 @@
+/**
+ * 生成文章的数据文件
+ * TODO: From github issue
+ */
+
+'use strict'
+
+// const uuid = require('node-uuid')
+const marked = require('marked')
+const yaml = require('js-yaml')
+const fp = require('path')
+const fs = require('fs')
+const fse = require('fs-extra')
+const frontMatter = require('hexo-front-matter')
+
+const articleBase = fp.join(__dirname, '../articles')
+let articles = []
+const jsonDb = {
+  articles: [],
+  contents: []
+}
+fse.walk(articleBase)
+  .on('data', item => {
+    const stats = item.stats
+    if (stats.isFile() && fp.extname(item.path) === '.md' ) {
+      articles.push(item.path)
+    }
+  })
+  .on('end', _ => {
+    articles.forEach(article => {
+      const content = fs.readFileSync(article).toString()
+      const data = frontMatter.parse(content)
+      let id = fp.basename(article)
+      id = id.slice(0, id.length - 3)
+      // const id = uuid.v1()
+
+      data.id = id
+      jsonDb.contents.push({
+        id,
+        articleId: id,
+        content: marked(data._content)
+      })
+      delete data._content
+      jsonDb.articles.push(data)
+   })
+
+   fs.writeFileSync(fp.join(articleBase, 'data.json'), JSON.stringify(jsonDb))
+ })
