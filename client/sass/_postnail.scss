@@ -1,0 +1,36 @@
+.post-nail:after {
+  display: block;
+  content: "";
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+.post-nail:last-child:after {
+  display: none;
+}
+.post-nail-title {
+  margin-top: 4px;
+  font-size: 20px;
+
+  & > a {
+    padding-bottom: 3px;
+    color: inherit;
+
+    &:hover {
+      border-bottom: 2px solid $link-active-color;
+    }
+  }
+}
+
+.post-nail-date {
+  color: $text-shallow-color;
+}
+
+.post-nail-abstract {
+
+}
+
+.post-nail-more {
+  font-size: 12px;
+  font-weight: bold;
+}

@@ -1,10 +1,11 @@
 .site-wrapper {
   /*overflow-x: hidden;*/
-  max-width: 600px;
+  max-width: $site-max-width;
   margin: 0 auto;
   padding: 0 25px;
 }
 
+// 页头部分
 .nav {
   padding-top: 2px;
   text-align: right;
@@ -13,17 +14,22 @@
 }
 .nav > a {
   margin: 0 8px;
-  color: #828E99;
+  color: $text-shallow-color;
   transition: color .3s;
 }
 .nav > a:hover {
   color: #2c3e50;
 }
+.nav > a.active {
+  padding-bottom: 3px;
+  color: inherit;
+  border-bottom: 2px solid $link-active-color;
+}
 
 .title {
   float: left;
   margin-left: -100%;
-  color: #2c3e50;
+  color: $text-secondary-color;
   text-align: center;
   letter-spacing: 5px;
   font-size: 1.2em;
@@ -40,44 +46,10 @@
   clear: both;
 }
 
-.post-header {
-  margin-bottom: 1em;
-}
-
-.content {
-  margin-top: 18px;
-  padding: 1.2em 0;
-}
-
-.post .date {
-  letter-spacing: 1px;
-  margin-bottom: -1em;
-  color: #828E99;
-}
-
-.tags {
-  margin-top: -1em;
-  padding: 0 4px;
-}
-.tag {
-  padding: 0 4px;
-  color: #828E99;
-}
-
-[class^="lang-"] {
-  position: relative;
-}
-.lang-sign {
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  color: #ccc;
-}
-
 // 页脚部分
 .site-footer {
   font-size: 12px;
-  color: #828E99;
+  color: $text-shallow-color;
   margin: 1.5em 0;
 }
 .site-footer a {
@@ -85,7 +57,7 @@
   transition: color .3s;
 }
 .site-footer a:hover {
-  color: #2c3e50;
+  color: $text-secondary-color;
 }
 
 .copyright, .icp {

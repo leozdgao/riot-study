@@ -8,6 +8,8 @@ date: "Feb 14, 2016"
 
 如果希望使用ES6 Component，有希望可以用一个像mixin一样的方案的话，可以使用`react-mixin`这样的库，就有种hack的感觉。这里介绍一个新的方案：High Order Component。
 
+<!-- more -->
+
 ## 什么是High Order Component？
 
 High Order Component，下面统一简称为HOC。我理解的HOC实际上是这样一个函数：

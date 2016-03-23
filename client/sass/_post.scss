@@ -1,0 +1,49 @@
+// 包括了文章内容页面的样式
+
+.post {
+  h2, h3 {
+    position: relative;
+  }
+
+  h2:before, h3:before {
+    position: absolute;
+    content: "#";
+    font-weight: bold;
+    color: #1980e6;
+    left: -.8em;
+  }
+}
+
+.post-header {
+  margin-bottom: 1em;
+}
+
+.content {
+  margin-top: 18px;
+  padding: 1.2em 0;
+}
+
+.post .date {
+  letter-spacing: 1px;
+  margin-bottom: -1em;
+  color: $text-shallow-color;
+}
+
+.tags {
+  margin-top: -1em;
+  padding: 0 4px;
+}
+.tag {
+  padding: 0 4px;
+  color: $text-shallow-color;
+}
+
+[class^="lang-"] {
+  position: relative;
+}
+.lang-sign {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  color: #ccc;
+}

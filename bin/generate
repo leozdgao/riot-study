@@ -5,36 +5,57 @@
 
 'use strict'
 
-// const uuid = require('node-uuid')
 const marked = require('marked')
 const yaml = require('js-yaml')
 const fp = require('path')
 const fs = require('fs')
-const fse = require('fs-extra')
+const klaw = require('klaw')
+const through2 = require('through2')
 const frontMatter = require('hexo-front-matter')
 
 const articleBase = fp.join(__dirname, '../articles')
+const draftFolder = fp.join(articleBase, '__drafts')
 let articles = []
 const jsonDb = {
   articles: [],
   contents: []
 }
-fse.walk(articleBase)
+
+// filters
+const ignoreDraftFolder = through2.obj(function (item, enc, next) {
+  if (item.path.indexOf(draftFolder) < 0) this.push(item)
+  next()
+})
+const collectMarkdownFile = through2.obj(function (item, enc, next) {
+  const stats = item.stats
+  if (stats.isFile() && fp.extname(item.path) === '.md' ) {
+    this.push(item)
+  }
+  next()
+})
+
+klaw(articleBase)
+  .pipe(ignoreDraftFolder) // 忽略 __drafts 目录
+  .pipe(collectMarkdownFile) // 挑选出 markdown 文件
   .on('data', item => {
-    const stats = item.stats
-    if (stats.isFile() && fp.extname(item.path) === '.md' ) {
-      articles.push(item.path)
-    }
+    articles.push(item.path)
   })
   .on('end', _ => {
     articles.forEach(article => {
       const content = fs.readFileSync(article).toString()
       const data = frontMatter.parse(content)
+      // 文件名作为 id
       let id = fp.basename(article)
-      id = id.slice(0, id.length - 3)
-      // const id = uuid.v1()
-
+      id = id.slice(0, id.length - 3) // 去掉 .md 扩展名
       data.id = id
+      // 分离出摘要
+      let abstract = ''
+      const temp = data._content.split('<!-- more -->')
+      if (temp.length > 1) {
+        abstract = temp[0]
+      }
+      data.abstract = marked(abstract)
+
       jsonDb.contents.push({
         id,
         articleId: id,

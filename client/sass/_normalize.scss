@@ -3,7 +3,7 @@ body {
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #34495e;
+  color: $text-primary-color;
   margin: 0;
   line-height: 1.6;
 }
@@ -12,31 +12,19 @@ h1 { font-size: 2em; }
 
 h1, h2, h3, h4, strong {
   font-weight: 600;
-  color: #2c3e50;
-}
-
-h2, h3 {
-  position: relative;
-}
-
-h2:before, h3:before {
-  position: absolute;
-  content: "#";
-  font-weight: bold;
-  color: #1980e6;
-  left: -.8em;
+  color: $text-secondary-color;
 }
 
 code, pre {
   font-family: 'Roboto Mono', Monaco, courier, monospace;
   font-size: 12px;
-  background-color: #f8f8f8;
+  background-color: $shallow-area-bkg;
   -webkit-font-smoothing: initial;
   -moz-osx-font-smoothing: initial;
 }
 
 code {
-  color: #e96900;
+  color: $inline-code-color;
   padding: 3px 5px;
   margin: 0 2px;
   border-radius: 2px;
@@ -55,7 +43,7 @@ blockquote {
   position: relative;
   margin: 0;
   padding: .8em .8em .8em 3em;
-  background-color: #f8f8f8;
+  background-color: $shallow-area-bkg;
 }
 blockquote > p { margin: 0; }
 blockquote:before {
@@ -64,7 +52,7 @@ blockquote:before {
   left: 12px;
   font-size: 32px;
   line-height: 1.2;
-  color: #828E99;
+  color: $text-shallow-color;
 }
 
 img {
@@ -74,11 +62,11 @@ img {
 a {
   cursor: pointer;
   text-decoration: none;
-  color: #1980e6;
+  color: $link-primary-color;
 }
 a:link, a:visited {
-  color: #047ac6;
+  color: $link-visit-color;
 }
 a:hover, a:active {
-  color: #2596de;
+  color: $link-active-color;
 }
